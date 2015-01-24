@@ -1,0 +1,10 @@
+Complete lab_1.cpp. Upload your .cpp file to Blackboard
+
+NOTE: To compile your code you will need to run the following:
+make
+
+If it compiles correctly you can test using the following:
+./lab_1
+
+After you are finished you are advised to run the following:
+make clean
