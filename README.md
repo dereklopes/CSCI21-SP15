@@ -1,6 +1,6 @@
-# README #
+# CSCI 21 #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This repository contains the files needed for the Spring 2015 semester of CSCI 21 at Butte College
 
 ### What is this repository for? ###
 
