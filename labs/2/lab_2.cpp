@@ -22,7 +22,7 @@ void UnitTest();
 void Test(bool test, int line_number, string more_info = "", string yours = "!",
           string actual = "!");
 void OutputFailedTests();
-unsigned int ut_passed = 0, ut_failed = 0, ut_total = 0, num_of_tests = 0;
+unsigned int ut_passed = 0, ut_failed = 0, ut_total = 0, num_of_tests = 7;
 std::vector<int> failed_tests;
 
 // Function Prototypes (DO NOT ALTER)
@@ -45,7 +45,7 @@ int main() {
  * Given an initial integer value (representing change to be given, such as in a
  * financial transaction), break the value down into the number of quarters,
  * dimes, nickels, and pennies that would be given as change.
- * @param int initial_value - The amount of change to be broken down
+ * @param int initial_value - The amount of change to be broken down in pennies.
  * @param int quarters  - The number of quarters that come out of initial_value
  * @param int dimes - The number of dimes that come out of initial_value,
  *                    after quarters have been taken out
@@ -72,22 +72,23 @@ void MakeChange(int initial_value, int &quarters, int &dimes, int &nickels,
  */
 double LaunchHumanCannonball(double initial_velocity, double launch_angle) {
   // (1) Convert launch_angle from degrees to radians
-  //     [radangle = degangle * (kPI/180)]
+  //     [radian_angle = degree_launch_angle * (kPI/180)]
   // CODE HERE
 
   // (2) Compute final horizontal/x velocity
-  //     [xveloc = initialVelocity * cos(radangle)]
+  //     [x_velocity = initial_velocity * cos(radian_angle)]
   // CODE HERE
 
   // (3) Compute final vertical/y velocity
-  //     [yveloc = initialVecity * sin(radangle) * -1]
+  //     [y_velocity = initial_velocity * sin(radian_angle) * -1]
   // CODE HERE
 
-  // (4) Compute time of flight [flighttime = (yveloc) * 2 / -9.8]
+  // (4) Compute time of flight 
+  //     [flight_time = (y_velocity) * 2 / -9.8]
   // CODE HERE
 
-  // (5) Compute horizontal/x distance traveled
-  //     [xdistance = xveloc * flighttime]
+  // (5) Compute horizontal/x distance travelled
+  //     [x_distance = x_velocity * flight_time]
   // CODE HERE
 
 }

@@ -1,4 +1,4 @@
-clear
+printf "\033c"
 PS3='Please enter your choice: '
 ONE='Run Advanced Input'
 ONE_FILE='advanced_input'
@@ -15,6 +15,7 @@ SIX_FILE='overloading_concepts'
 options=("Compile All" "$ONE" "$TWO" "$THREE" "$FOUR" "$FIVE" "$SIX" "Clean up Executables" "Quit")
 select opt in "${options[@]}"
 do
+    printf "\033c"
     case $opt in
         "Compile All")
             make

@@ -1,4 +1,4 @@
-clear
+printf "\033c"
 PS3='Please enter your choice: '
 ONE='Run Variables'
 ONE_FILE='variables'
@@ -9,6 +9,7 @@ THREE_FILE='input_output'
 options=("Compile All" "$ONE" "$TWO" "$THREE" "Clean up Executables" "Quit")
 select opt in "${options[@]}"
 do
+    printf "\033c"
     case $opt in
         "Compile All")
             make

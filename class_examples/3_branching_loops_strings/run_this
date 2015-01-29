@@ -1,4 +1,4 @@
-clear
+printf "\033c"
 PS3='Please enter your choice: '
 ONE='Run Basic Branching'
 ONE_FILE='basic_branching'
@@ -13,6 +13,7 @@ FIVE_FILE='character_functions'
 options=("Compile All" "$ONE" "$TWO" "$THREE" "$FOUR" "$FIVE" "Clean up Executables" "Quit")
 select opt in "${options[@]}"
 do
+    printf "\033c"
     case $opt in
         "Compile All")
             make

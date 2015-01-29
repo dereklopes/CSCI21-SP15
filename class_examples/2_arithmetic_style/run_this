@@ -1,4 +1,4 @@
-clear
+printf "\033c"
 PS3='Please enter your choice: '
 ONE='Run Arithmetic'
 ONE_FILE='arithmetic'
@@ -11,6 +11,7 @@ FOUR_FILE='style'
 options=("Compile All" "$ONE" "$TWO" "$THREE" "$FOUR" "Clean up Executables" "Quit")
 select opt in "${options[@]}"
 do
+    printf "\033c"
     case $opt in
         "Compile All")
             make

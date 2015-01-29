@@ -3,7 +3,7 @@ CXX = /usr/bin/g++
 MAIN = lab_1
 CPP_FILES = 
 H_FILES = 
-CXXFLAGS = -Wall -Wextra -Werror -pedantic -g
+CXXFLAGS = -Wall -Wextra -pedantic -g
 
 # Type 'make' to create the executable
 ${MAIN}: ${MAIN}.cpp ${H_FILES} ${CPP_FILES}
