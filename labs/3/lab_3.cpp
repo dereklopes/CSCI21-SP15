@@ -88,12 +88,12 @@ int RockScissorPaper(char player_one, char player_two) {
  * Return a string that contains a character (taken from the parameter
  * c) and its ASCII integer value. For example, If the char passed in is 'A',
  * the function will return '"A 65"
- * @param char c - The char from which an ASCII value will be taken
+ * @param char character - The char from which an ASCII value will be taken
  * @return string - A string containing the original character argument,
  *                  followed by a space, followed by the ASCII integer value of
  *                  the char
  */
-string CharWithAsciiValueAsString(char c) {
+string CharWithAsciiValueAsString(char character) {
   // CODE HERE
 
   // HINT: try a stringstream here
