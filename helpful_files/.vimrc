@@ -266,6 +266,12 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Remap ii to exit insert mode
+:imap ii <Esc>
+
+" Jump to a line number by typing line number and pressing enter
+:noremap <Cr> G
+
 " Remap VIM 0 to first non-blank character
 map 0 ^
 
