@@ -1,6 +1,6 @@
 # Makefile for Assignment 3
 CXX = /usr/bin/g++
-MAIN = assignment_3_unit_test 
+MAIN = assignment_3_unit_test
 CPP_FILES = dynamic_string_array.cpp
 H_FILES = dynamic_string_array.h 
 CXXFLAGS = -Wall -Wextra -pedantic -g
