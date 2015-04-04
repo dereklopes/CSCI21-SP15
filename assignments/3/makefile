@@ -1,8 +1,8 @@
-# Makefile for Lab 14
+# Makefile for Assignment 3
 CXX = /usr/bin/g++
-MAIN = 
-CPP_FILES = 
-H_FILES = 
+MAIN = assignment_3_unit_test 
+CPP_FILES = dynamic_string_array.cpp
+H_FILES = dynamic_string_array.h 
 CXXFLAGS = -Wall -Wextra -pedantic -g
 
 # Type 'make' to create the executable
