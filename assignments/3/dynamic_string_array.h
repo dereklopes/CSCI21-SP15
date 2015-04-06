@@ -79,7 +79,7 @@ class DynamicStringArray {
   /* Const function that gets the current maximum capacity of the array.
    * @return unsigned int - the maximum capacity of the array
    */
-  unsigned int GetCpacity() const;
+  unsigned int GetCapacity() const;
 
   /* Const function. Checks to see if the array is empty.
    * @return bool - returns true if array is empty (size 0)
