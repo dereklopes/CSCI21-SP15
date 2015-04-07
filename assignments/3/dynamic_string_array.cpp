@@ -161,7 +161,33 @@ void Clear() {
 /* Sorts the array alphabetically A-Z, case insensitive.
  * @uses ToUpper()
  */
-void Sort();
+void Sort() {
+  unsigned int gap = size / 2;
+  while (gap > 0) {
+    for (unsigned int i = gap; i < size; i++) {
+      string temp = string_array[i];
+      unsigned int j = i;
+      while (j >= gap && ToUpper(string_array[j - gap]).at(1) > temp) {
+        string_array[j] = string_array[j - gap];
+        j = j - gap;
+      }
+      string_array[j] = temp;
+    }
+    gap = gap / 2;
+  }
+}
+
+/* Returns a string containing all the strings in the array, comma separated.
+ * @return string - a string of all the strings in the array
+ */
+void ToString() {
+  stringstream ss;
+  for (unsigned int i = 0; i < (size - 1); i++) {
+    ss << string_array[i] << ", ";
+  }
+  ss << string_array[size - 1];
+  return ss.str();
+}
 
 /* Overloaded Friend Operator for << to output a comma separated list of the strings
  */
