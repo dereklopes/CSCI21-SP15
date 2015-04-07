@@ -95,6 +95,11 @@ class DynamicStringArray {
    */
   void Sort();
 
+  /* Returns a string containing all the strings in the array, comma separated.
+   * @return string - a string of all the strings in the array
+   */
+  void ToString();
+
   /* Overloaded Friend Operator for << to output a comma separated list of the strings
    */
   friend const ostream& operator <<(ostream&, const DynamicStringArray&);
