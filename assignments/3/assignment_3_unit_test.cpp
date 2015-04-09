@@ -25,10 +25,14 @@ std::vector<int> failed_tests;
 // Program Execution Starts Here
 int main() {
   // START DEBUGGING CODE
-
+  DynamicStringArray test;
+  for (int i = 0; i < 15; i++) {
+    test.AddFront(new string("test"));
+  }
+  cout << "Initialized 15 elements." << endl;
   // END DEBUGINH CODE
   // To test your code (DO NOT ALTER)
-  UnitTest();
+  // UnitTest();
   // This ends program execution
   return 0;
 }
