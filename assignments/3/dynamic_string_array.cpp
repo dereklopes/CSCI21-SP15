@@ -11,19 +11,19 @@
  */
 DynamicStringArray::DynamicStringArray() {
   max_capacity = 10;
-  string_array = new string*[max_capacity];    
+  string_array = new string*[max_capacity];
   size = 0;
   for (unsigned int i = 0; i < max_capacity; i++) {
     string_array[i] = NULL;
   }
-} 
+}
 /* Constructor to initialize the array to provided size and elements to NULL.
  * Defaults to size 10 if parameter is invalid.
  * @param unsigned int - size the array should be initialized
  */
 DynamicStringArray::DynamicStringArray(unsigned int size) {
   max_capacity = size;
-  string_array = new string*[max_capacity];    
+  string_array = new string*[max_capacity];
   size = 0;
   for (unsigned int i = 0; i < max_capacity; i++) {
     string_array[i] = NULL;
@@ -130,7 +130,7 @@ void DynamicStringArray::DeleteBack() {
 unsigned int DynamicStringArray::GetSize() const {
   return size;
 }
-  
+
 /* Const function that gets the current maximum capacity of the array.
  * @return unsigned int - the maximum capacity of the array
  */
@@ -148,7 +148,7 @@ bool DynamicStringArray::Empty() const {
     return false;
   }
 }
-  
+
 /* Deletes all of the strings in the array and sets size to 0.
  */
 void DynamicStringArray::Clear() {
@@ -162,25 +162,38 @@ void DynamicStringArray::Clear() {
  * @uses ToUpper()
  */
 void DynamicStringArray::Sort() {
-
+  for (unsigned int i = (size - 1); i > 0; i--) {
+    for (unsigned int j = 0; j < i; j++) {
+      if (ToUpper(*string_array[j]) < ToUpper(*string_array[j + 1])) {
+        string* temp = string_array[j];
+        string_array[j] = string_array[j + 1];
+        string_array[j + 1] = temp;
+      }
+    }
+  }
 }
 
 /* Returns a string containing all the strings in the array, comma separated.
  * @return string - a string of all the strings in the array
  */
-string DynamicStringArray::ToString() {
+string DynamicStringArray::ToString() {  // SEG. FAULT WITHIN
   stringstream ss;
+  std::cout << "STARTING";
   for (unsigned int i = 0; i < (size - 1); i++) {
-    ss << string_array[i] << ", ";
+    ss << *string_array[i] << ", ";
+    std::cout << i;
   }
-  ss << string_array[size - 1];
+  ss << *string_array[size - 1];
   return ss.str();
 }
 
 /* Overloaded Friend Operator for << to output a comma separated list of the strings
  */
 ostream& operator <<(ostream& out, const DynamicStringArray& the_array) {
-  out << the_array.ToString();  
+  for (unsigned int i = 0; i < (the_array.GetSize() - 1); i++) {
+    out << *the_array.string_array[i] << ", ";
+  }
+  out << *the_array.string_array[the_array.GetSize() - 1];
   return out;
 }
 
@@ -197,4 +210,16 @@ void DynamicStringArray::IncreaseCapacity() {
   delete[] string_array;
   string_array = string_array_2;
   string_array_2 = NULL;
+}
+
+/* Takes a string and returns that string with all uppercase letters.
+ * @param string - the string to be capitalized
+ * @return string - the capitalized string
+ */
+string DynamicStringArray::ToUpper(string word) {
+  string caps;
+  for (unsigned int i = 1; i < word.length(); i++) {
+    caps.at(i) = toupper(word.at(i));
+  }
+  return caps;
 }
