@@ -98,11 +98,11 @@ class DynamicStringArray {
   /* Returns a string containing all the strings in the array, comma separated.
    * @return string - a string of all the strings in the array
    */
-  void ToString();
+  string ToString();
 
   /* Overloaded Friend Operator for << to output a comma separated list of the strings
    */
-  friend const ostream& operator <<(ostream&, const DynamicStringArray&);
+  friend ostream& operator <<(ostream& out, const DynamicStringArray& the_array);
  private:
   /* Increases the capacity by 10.
    */
@@ -113,7 +113,7 @@ class DynamicStringArray {
    */
   void ToUpper(string word);
 
-  string* string_array = NULL;
+  string** string_array;
 
   unsigned int max_capacity;
 
