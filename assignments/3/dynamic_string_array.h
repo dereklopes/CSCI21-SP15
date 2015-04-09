@@ -19,7 +19,7 @@ class DynamicStringArray {
   /* Default constructor to initialize the array to size 10 and elements to NULL
    */
   DynamicStringArray();
- 
+
   /* Constructor to initialize the array to provided size and elements to NULL.
    * Defaults to size 10 if parameter is invalid.
    * @param unsigned int - size the array should be initialized
@@ -75,7 +75,7 @@ class DynamicStringArray {
    * @return unsigned int - the current size of the array
    */
   unsigned int GetSize() const;
-  
+
   /* Const function that gets the current maximum capacity of the array.
    * @return unsigned int - the maximum capacity of the array
    */
@@ -85,7 +85,7 @@ class DynamicStringArray {
    * @return bool - returns true if array is empty (size 0)
    */
   bool Empty() const;
-  
+
   /* Deletes all of the strings in the array and sets size to 0.
    */
   void Clear();
@@ -102,7 +102,9 @@ class DynamicStringArray {
 
   /* Overloaded Friend Operator for << to output a comma separated list of the strings
    */
-  friend ostream& operator <<(ostream& out, const DynamicStringArray& the_array);
+  friend ostream& operator <<(ostream& out,
+                              const DynamicStringArray& the_array);
+
  private:
   /* Increases the capacity by 10.
    */
@@ -111,7 +113,7 @@ class DynamicStringArray {
   /* Takes a string and returns that string with all uppercase letters.
    * @param string - the string to be capitalized
    */
-  void ToUpper(string word);
+  string ToUpper(string word);
 
   string** string_array;
 
