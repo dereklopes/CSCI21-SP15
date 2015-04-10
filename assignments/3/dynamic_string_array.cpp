@@ -21,12 +21,18 @@ DynamicStringArray::DynamicStringArray() {
  * Defaults to size 10 if parameter is invalid.
  * @param unsigned int - size the array should be initialized
  */
-DynamicStringArray::DynamicStringArray(unsigned int size) {
-  max_capacity = size;
-  string_array = new string*[max_capacity];
-  size = 0;
-  for (unsigned int i = 0; i < max_capacity; i++) {
-    string_array[i] = NULL;
+DynamicStringArray::DynamicStringArray(unsigned int size_) {
+  if (size_ == 0) {
+    max_capacity = 10;
+    string_array = new string*[max_capacity];
+    size = 0;
+  } else {
+    max_capacity = size_;
+    string_array = new string*[max_capacity];
+    size = 0;
+    for (unsigned int i = 0; i < max_capacity; i++) {
+      string_array[i] = NULL;
+    }
   }
 }
 
@@ -46,8 +52,8 @@ DynamicStringArray::~DynamicStringArray() {
  * @return string* - pointer to the string at provided location
  */
 string* DynamicStringArray::At(unsigned int location) {
-  if (location > size)
-    throw string("Invallid Location");
+  if (location >= size)
+    throw string("Invalid Location");
   return string_array[location];
 }
 
@@ -56,8 +62,8 @@ string* DynamicStringArray::At(unsigned int location) {
  * @return string* - pointer to the first string in the array.
  */
 string* DynamicStringArray::GetFirst() {
-  if (size != 0)
-    throw string("Invallid Location");
+  if (size == 0)
+    throw string("Array Empty");
   return string_array[0];
 }
 
@@ -66,9 +72,9 @@ string* DynamicStringArray::GetFirst() {
  * @return string* - pointer to the last string in the array.
  */
 string* DynamicStringArray::GetLast() {
-  if (size != 0)
-    throw string("Invallid Location");
-  return string_array[size];
+  if (size == 0)
+    throw string("Array Empty");
+  return string_array[size - 1];
 }
 
 /* Adds the provided string to the front of the array.
@@ -99,6 +105,7 @@ void DynamicStringArray::AddBack(string* to_add) {
     IncreaseCapacity();
   }
   string_array[size] = to_add;
+  size++;
 }
 
 /* Deletes the first element in the array.
@@ -107,21 +114,20 @@ void DynamicStringArray::AddBack(string* to_add) {
 void DynamicStringArray::DeleteFront() {
   if (size == 0)
     throw string("Array Empty");
-  string** string_array_2 = new string*[max_capacity];
   for (unsigned int i = 1; i < size; i++) {
-    string_array_2[i - 1] = string_array[i];
+    string_array[i - 1] = string_array[i];
   }
-  delete[] string_array;
-  string_array = string_array_2;
-  string_array_2 = NULL;
+  string_array[--size] = NULL;
 }
 
 /* Deletes the last element in the array.
  * If the array is empty, the string "Array Empty" is thrown.
  */
 void DynamicStringArray::DeleteBack() {
-  string_array[size - 1] = NULL;
-  size--;
+  if (size == 0)
+    throw string("Array Empty");
+  delete string_array[size - 1];
+  string_array[--size] = NULL;
 }
 
 /* Const function that gets the current size of the array.
@@ -164,7 +170,7 @@ void DynamicStringArray::Clear() {
 void DynamicStringArray::Sort() {
   for (unsigned int i = (size - 1); i > 0; i--) {
     for (unsigned int j = 0; j < i; j++) {
-      if (ToUpper(*string_array[j]) < ToUpper(*string_array[j + 1])) {
+      if (ToUpper(*string_array[j]) > ToUpper(*string_array[j + 1])) {
         string* temp = string_array[j];
         string_array[j] = string_array[j + 1];
         string_array[j + 1] = temp;
@@ -176,12 +182,12 @@ void DynamicStringArray::Sort() {
 /* Returns a string containing all the strings in the array, comma separated.
  * @return string - a string of all the strings in the array
  */
-string DynamicStringArray::ToString() {  // SEG. FAULT WITHIN
+string DynamicStringArray::ToString() {
+  if (size == 0)
+    return "";
   stringstream ss;
-  std::cout << "STARTING";
   for (unsigned int i = 0; i < (size - 1); i++) {
     ss << *string_array[i] << ", ";
-    std::cout << i;
   }
   ss << *string_array[size - 1];
   return ss.str();
@@ -201,12 +207,10 @@ ostream& operator <<(ostream& out, const DynamicStringArray& the_array) {
  */
 void DynamicStringArray::IncreaseCapacity() {
   string** string_array_2 = new string*[max_capacity + 10];
-  for (unsigned int i = 0; i < size; i++) {
+  for (unsigned int i = 0; i < max_capacity; i++) {
     string_array_2[i] = string_array[i];
   }
-  for (unsigned int i = size; i < max_capacity; i++) {
-    string_array_2[i] = NULL;
-  }
+  max_capacity += 10;
   delete[] string_array;
   string_array = string_array_2;
   string_array_2 = NULL;
@@ -217,9 +221,10 @@ void DynamicStringArray::IncreaseCapacity() {
  * @return string - the capitalized string
  */
 string DynamicStringArray::ToUpper(string word) {
-  string caps;
-  for (unsigned int i = 1; i < word.length(); i++) {
-    caps.at(i) = toupper(word.at(i));
+  unsigned int i = 0;
+  while (word[i]) {
+    word[i] = toupper(word[i]);
+    i++;
   }
-  return caps;
+  return word;
 }
