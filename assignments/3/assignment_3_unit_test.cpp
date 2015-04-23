@@ -25,14 +25,9 @@ std::vector<int> failed_tests;
 // Program Execution Starts Here
 int main() {
   // START DEBUGGING CODE
-  DynamicStringArray test;
-  for (int i = 0; i < 15; i++) {
-    test.AddFront(new string("test"));
-  }
-  cout << "Initialized 15 elements." << endl;
   // END DEBUGINH CODE
   // To test your code (DO NOT ALTER)
-  // UnitTest();
+  UnitTest();
   // This ends program execution
   return 0;
 }
@@ -88,6 +83,7 @@ void UnitTest() {
   Test(list.GetCapacity() == 10, "GetCapacity()");
   Test(list.ToString() == "Hello", "ToString()");
   Test(list.Empty() == false, "Empty()");
+  cout << list << "--------------------------------------------------\n";
   try {
     list.At(1);
   } catch (const string &e) {
@@ -216,6 +212,8 @@ void UnitTest() {
 
   for (int i = 0; i < 31; i++) {
     if (i % 2 == 0) {
+      if (i == 10)
+        cout << list << endl;
       ss << "StRiNg #" << i + 1;
       list.AddFront(new string(ss.str()));
     } else {
