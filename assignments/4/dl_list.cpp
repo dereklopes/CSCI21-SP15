@@ -9,7 +9,7 @@
 /* Default constructor. Initializes the member variables and sets up the list.
  */
 DLList::DLList()
-  : size_(0), head_(NULL), tail_(NULL) 
+  : size_(0), head_(NULL), tail_(NULL)
 { }
 
 /* Destructor. Clears the list with the Clear() member function.
@@ -142,9 +142,29 @@ void DLList::RemoveFirst(int value) {
     PopBack();
     did_delete = true;
   } else {
-    DLNode *iterator = head_->GetNext();
-    iterator = iterator->GetNext();
-    while (iterator->GetNext() != NULL && !did_delete) {
+    DLNode *iterator = head_;
+
+    // DEBUGGING
+    /*
+    cout << "Size: " << size_ << endl;
+    cout << "Expected list: " << ToStringForwards() << endl;
+    unsigned int counter = 1;
+    cout << "Value " << counter << ": " << head_->GetContents() << endl;
+    cout << "Expected next value: " << iterator->GetNext()->GetContents() << endl;
+    */
+
+    while (iterator->GetNext() != tail_) {
+      iterator = iterator->GetNext();
+
+      // DEBUGGING
+      /*
+      counter++;
+      cout << "Value " << counter << ": " << iterator->GetContents() << endl;
+      cout << "Expected next value: " << iterator->GetNext()->GetContents() << endl;
+      if (iterator->GetNext() == tail_)
+        cout << "IT NEXT == TAIL" << endl;
+      */
+
       if (iterator->GetContents() == value) {
         // sets the node behind the iterator's next node to the one
         // after the iterator
@@ -155,19 +175,22 @@ void DLList::RemoveFirst(int value) {
         (iterator->GetNext())->SetPrevious(iterator->GetPrevious());
 
         // deletes the node at the iterator
-        delete iterator;
+        DLNode *temp = iterator;
+        delete temp;
+
+        // breaks the loop
+        iterator = tail_->GetPrevious();
         did_delete = true;
+
+        // decrement size
+        size_--;
       }
-      if (!did_delete)
-        iterator = iterator->GetNext();
     }
   }
   if (!did_delete) {  // checks to see if it did not delete the node
     cerr << "Not Found";
-    size_--;
   }
 }
-        
 
 /* Removes all the nodes with the provided value.
  * If the value is not found, outputs "Not Found" to cerr.
@@ -188,9 +211,19 @@ void DLList::RemoveAll(int value) {
     PopBack();
     did_delete = true;
   }
-  DLNode *iterator = head_->GetNext();
-  iterator = iterator->GetNext();
-  while (iterator->GetNext() != NULL) {
+  DLNode *iterator = head_;
+  while (iterator->GetNext() != tail_) {
+    iterator = iterator->GetNext();
+
+    // DEBUGGING
+    /*
+    counter++;
+    cout << "Value " << counter << ": " << iterator->GetContents() << endl;
+    cout << "Expected next value: " << iterator->GetNext()->GetContents() << endl;
+    if (iterator->GetNext() == tail_)
+      cout << "IT NEXT == TAIL" << endl;
+    */
+
     if (iterator->GetContents() == value) {
       // sets the node behind the iterator's next node to the one
       // after the iterator
@@ -201,46 +234,18 @@ void DLList::RemoveAll(int value) {
       (iterator->GetNext())->SetPrevious(iterator->GetPrevious());
 
       // deletes the node at the iterator
-      delete iterator;
+      DLNode *temp = iterator;
+      delete temp;
+
       did_delete = true;
+
+      // decrement size
+      size_--;
     }
-    if (!did_delete)
-      iterator = iterator->GetNext();
   }
   if (!did_delete) {  // checks to see if it did not delete the node
     cerr << "Not Found";
-    size_--;
   }
-  /* OLD CODE
-  DLNode* iterator = head_;
-  if (size_ == 1) {
-    if (value == iterator->GetContents())
-      PopFront();
-  } else {
-    bool did_delete = false;
-    unsigned int amount_deleted = 0;
-    while (iterator != NULL) {
-      if (iterator->GetContents() == value) {
-        // sets the node behind the iterator's next node to the one
-        // after the iterator
-        iterator->GetPrevious()->SetNext(iterator->GetNext());
-        // sets the node after the iterator's previous node to the
-        // one before the iterator
-        iterator->GetNext()->SetPrevious(iterator->GetPrevious());
-        // deletes the node at the iterator
-        delete iterator;
-        did_delete = true;
-        amount_deleted++;
-      }
-    }
-    if (did_delete) {  // checks to see if it did not delete the node
-      cerr << "Not Found";
-      for (unsigned int i = 0; i < amount_deleted; i++) {
-        size_--;
-      }
-    }
-  }
-  */
 }
 
 /* Checks to see if the provided value is stored in the list.
