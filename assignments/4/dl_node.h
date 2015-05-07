@@ -53,8 +53,8 @@ class DLNode {
   DLNode* GetPrevious() const;
 
  private:
- int contents_;
- DLNode *next_node_, *previous_node_;
+  int contents_;
+  DLNode *next_node_, *previous_node_;
 };
 
 #endif  // DL_NODE_LOPES
