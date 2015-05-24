@@ -73,6 +73,10 @@ command W w !sudo tee % > /dev/null
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 
+" Highlights red after 80 characters
+highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
+match OverLength /\&81v.\+/
+
 " Turn on the WiLd menu
 set wildmenu
 
@@ -137,10 +141,8 @@ set foldcolumn=1
 syntax enable 
 set background=dark
 
-try
-    colorscheme morning
-catch
-endtry
+" Color the 81 column red for style help
+set colorcolumn=81
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -266,14 +268,14 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Remap VIM 0 to first non-blank character
+map 0 ^
+
 " Remap ii to exit insert mode
 :imap ii <Esc>
 
-" Jump to a line number by typing line number and pressing enter
+" Jump to a line number by typing line number and then enter
 :noremap <Cr> G
-
-" Remap VIM 0 to first non-blank character
-map 0 ^
 
 " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
 nmap <M-j> mz:m+<cr>`z
