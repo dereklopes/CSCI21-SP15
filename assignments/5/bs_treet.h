@@ -20,11 +20,11 @@ class BSTreeT {
  public:
   /* Default constructor. Sets root to NULL and size to 0.
    */
-  BSTree();
+  BSTreeT();
 
   /* Destructor. Calls the clear function.
    */
-  ~BSTree();
+  ~BSTreeT();
 
   /* Gets the size of the tree.
    * @return unsigned int - the size of the tree
@@ -57,7 +57,7 @@ class BSTreeT {
    * @param T - the value to search for
    * @return BSTNodeT* - a pointer to the node searched for, NULL if not found 
    */
-  BSTNodeT* Get(T value);
+  BSTNodeT<T>* Get(T value);
 
   /* Returns a string of the values in order
    * The values are separated by a comma
@@ -72,7 +72,7 @@ class BSTreeT {
   string ToStringBackwards();
 
  private:
-  BSTNodeT* root_;
+  BSTNodeT<T>* root_;
   unsigned int size_;
 
   /* Inserts the value into the tree starting at the root provided
@@ -81,30 +81,30 @@ class BSTreeT {
    * @param BSTNode*& - the root to start at
    * @return unsigned int - the number of times that value has been inserted 
    */
-  unsigned int Insert(T value, BSTNode*& root);
+  unsigned int Insert(T value, BSTNodeT<T>*& root);
 
   /* Searches the tree for the given value.
    * @param T - the value to search for
    * @return bool - true if the value was found
    */
-  bool Exists(T value, BSTNode* root);
+  bool Exists(T value, BSTNodeT<T>* root);
 
   /* Clears the tree at the root provided.
    * @param BSTNODE*& - the root to clear of the tree
    */
-  void Clear(BSTNode*& root);
+  void Clear(BSTNodeT<T>*& root);
 
   /* Creates a string of the tree values in order
    * @param BSTNode* - the root to start at
    * @return string - the values of the tree in order
    */
-  string ToStringForwards(BSTNode* root);
+  string ToStringForwards(BSTNodeT<T>* root);
 
   /* Creates a string of the tree values in reverse order
    * @param BSTNode* - the root to start at
    * @return string - the values of the tree in reverse order
    */
-  string ToStringBackwards(BSTNode* root);
+  string ToStringBackwards(BSTNodeT<T>* root);
 
   /* Deletes the given value in the given tree.
    * Decrements count if the value exists.
@@ -112,19 +112,13 @@ class BSTreeT {
    * @param BSTNode*& - the root of the tree to search
    * @return int - count, or -1 if it does not exist
    */
-  int Remove(T value, BSTNode*& root);
-
-  /* Searches for the given value in the given tree 
-   * @param T - the value to search for
-   * @return BSTNodeT* - a pointer to the node searched for, NULL if not found 
-   */
-  BSTNodeT* Get(T value, BSTNode* root);
+  int Remove(T value, BSTNodeT<T>*& root);
 
   /* Gets a pointer to the node containing the provided value.
    * @param T - the value to search for
    * @return BSTNodeT* - a pointer to the node searched for, NULL if not found 
    */
-  BSTNodeT* Get(T value, BSTNodeT* root);
+  BSTNodeT<T>* Get(T value, BSTNodeT<T>* root);
 };
 
 #endif  // BSTREET_LOPES

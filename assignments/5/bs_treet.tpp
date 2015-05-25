@@ -11,13 +11,13 @@
 /* Default constructor. Sets root to NULL and size to 0.
  */
 template <typename T>
-BSTree()
+BSTreeT<T>::BSTreeT()
   : root_(NULL), size(0) { }
 
 /* Destructor. Calls the clear function.
  */
 template <typename T>
-~BSTree() {
+BSTreeT<T>::~BSTreeT() {
   Clear();
 }
 
@@ -25,14 +25,14 @@ template <typename T>
  * @return unsigned int - the size of the tree
  */
 template <typename T>
-unsigned int GetSize() const {
+unsigned int BSTreeT<T>::GetSize() const {
   return size_;
 }
 
 /* Clears the entire tree. Calls the private clear funciton.
  */
 template <typename T>
-void Clear() {
+void BSTreeT<T>::Clear() {
   Clear(root_);
 }
 
@@ -41,7 +41,7 @@ void Clear() {
  * @return bool - true if the value was inserted
  */
 template <typename T>
-unsigned int Insert(T value) {
+unsigned int BSTreeT<T>::Insert(T value) {
   return Insert(value, root_);
 }
 
@@ -50,7 +50,7 @@ unsigned int Insert(T value) {
  * @return bool - true if the value was found
  */
 template <typename T>
-bool Exists(T value) {
+bool BSTreeT<T>::Exists(T value) {
   return Exists(value, root_);
 }
 
@@ -59,7 +59,7 @@ bool Exists(T value) {
  * @return int - count, or -1 if it does not exist
  */
 template <typename T>
-int Remove(T value) {
+int BSTreeT<T>::Remove(T value) {
   if (root_ == NULL)
     return (-1);
   return Remove(value, root_);
@@ -70,7 +70,7 @@ int Remove(T value) {
  * @return BSTNodeT* - a pointer to the node searched for, NULL if not found 
  */
 template <typename T>
-BSTNodeT* Get(T value) {
+BSTNodeT* BSTreeT<T>::Get(T value) {
   return Get(value, root_);
 }
 
@@ -79,7 +79,7 @@ BSTNodeT* Get(T value) {
  * @return string - the values of the tree in order
  */
 template <typename T>
-string ToStringForwards() {
+string BSTreeT<T>::ToStringForwards() {
   // Finds the last value in the tree so that no extra comma is added
   T last_value;
   if (root_ == NULL) {
@@ -99,7 +99,7 @@ string ToStringForwards() {
  * @return string - the values of the tree in reverse order
  */
 template <typename T>
-string ToStringBackwards() {
+string BSTreeT<T>::ToStringBackwards() {
   // Finds the first value in the tree so that no extra comma is added
   T first_value;
   if (root_ == NULL) {
@@ -123,7 +123,7 @@ string ToStringBackwards() {
  * @return unsigned int - the number of times that value has been inserted 
  */
 template <typename T>
-unsigned int Insert(T value, BSTNode*& root) {
+unsigned int BSTreeT<T>::Insert(T value, BSTNodeT*& root) {
   if (root == NULL) {
     root = new BSTNode(value);
     size_++;
@@ -146,7 +146,7 @@ unsigned int Insert(T value, BSTNode*& root) {
  * @param BSTNODE*& - the root to clear of the tree
  */
 template <typename T>
-void Clear(BSTNode*& root) {
+void BSTreeT<T>::Clear(BSTNodeT*& root) {
   if (root == NULL)
     return;
   Clear(root->GetLeftChild());
@@ -160,7 +160,7 @@ void Clear(BSTNode*& root) {
  * @return string - the values of the tree in order
  */
 template <typename T>
-string ToStringForwards(BSTNode* root) {
+string BSTreeT<T>::ToStringForwards(BSTNodeT* root) {
   if (root == NULL)
     return string("");
   stringstream ss;
@@ -179,7 +179,7 @@ string ToStringForwards(BSTNode* root) {
  * @return string - the values of the tree in reverse order
  */
 template <typename T>
-string ToStringBackwards(BSTNode* root) {
+string BSTreeT<T>::ToStringBackwards(BSTNodeT* root) {
   if (root == NULL)
     return string("");
   stringstream ss;
@@ -200,7 +200,7 @@ string ToStringBackwards(BSTNode* root) {
  * @return int - count, or -1 if it does not exist
  */
 template <typename T>
-int Remove(T value, BSTNode*& root) {
+int BSTreeT<T>::Remove(T value, BSTNodeT*& root) {
   if (value == root->GetContents()) {
     if (root->GetCount() > 0) {
       root->DecrementCount();
@@ -242,7 +242,7 @@ int Remove(T value, BSTNode*& root) {
  * @return BSTNodeT* - a pointer to the node searched for, NULL if not found 
  */
 template <typename T>
-BSTNodeT* Get(T value, BSTNodeT* root) {
+BSTNodeT* BSTreeT<T>::Get(T value, BSTNodeT* root) {
   if (value == root->GetContents())
     return root;
   if (root->GetLeftChild() == NULL && root->GetRightChild() == NULL) {

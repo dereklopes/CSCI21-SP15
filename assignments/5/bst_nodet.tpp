@@ -10,7 +10,7 @@
  * and contents to default.
  */
 template <typename T>
-BSTNodeT()
+BSTNodeT<T>::BSTNodeT()
   : contents_(T()), count_(0), left_child_(NULL), right_child_(NULL) { } 
 
 /* Overloaded constructor. Sets left and right pointers to NULL.
@@ -18,13 +18,13 @@ BSTNodeT()
  * @param T - value to set contents of node to
  */
 template <typename T>
-BSTNodeT(T value)
+BSTNodeT<T>::BSTNodeT(T value)
   : contents_(value), count_(0), left_child_(NULL), right_child_(NULL) { } 
 
 /* Destructor. Sets left and right pointers to NULL.
  */
 template <typename T>
-~BSTNodeT() {
+BSTNodeT<T>::~BSTNodeT() {
   left_child_ = right_child_ = NULL;
 }
 
@@ -32,7 +32,7 @@ template <typename T>
  * @param T - value to set contents of node to
  */
 template <typename T>
-void SetContents(T value) {
+void BSTNodeT<T>::SetContents(T value) {
   contents_ = value;
 }
 
@@ -40,7 +40,7 @@ void SetContents(T value) {
  * @return T - the contents of the node
  */
 template <typename T>
-T GetContents() const {
+T BSTNodeT<T>::GetContents() const {
   return contents_;
 }
 
@@ -48,7 +48,7 @@ T GetContents() const {
  * @param BSTNodeT* - a pointer to the left child node.
  */
 template <typename T>
-void SetLeft(BSTNodeT* left_child) {
+void BSTNodeT<T>::SetLeft(BSTNodeT* left_child) {
   left_child_ = left_child;
 }
 
@@ -56,7 +56,7 @@ void SetLeft(BSTNodeT* left_child) {
  * @param BSTNodeT* - a pointer to the right child node.
  */
 template <typename T>
-void SetRight(BSTNodeT* right_child) {
+void BSTNodeT<T>::SetRight(BSTNodeT* right_child) {
   right_child_ = right_child;
 }
 
@@ -64,7 +64,7 @@ void SetRight(BSTNodeT* right_child) {
  * @return BSTNodeT*& - a reference to the pointer to the left child.
  */
 template <typename T>
-BSTNodeT*& GetLeft() {
+BSTNodeT*& BSTNodeT<T>::GetLeft() {
   return left_child_;
 }
 
@@ -72,28 +72,28 @@ BSTNodeT*& GetLeft() {
  * @return BSTNodeT*& - a reference to the pointer to the right child.
  */
 template <typename T>
-BSTNodeT*& GetRight() {
+BSTNodeT*& BSTNodeT<T>::GetRight() {
   return right_child_;
 }
 
 /* Increments count by 1.
  */
 template <typename T>
-void IncrementCount() {
+void BSTNodeT<T>::IncrementCount() {
   count_++;
 }
 
 /* Decrements count by 1.
  */
 template <typename T>
-void DecrementCount() {
+void BSTNodeT<T>::DecrementCount() {
   count_--;
 }
 
 /* Gets the value of count.
  */
 template <typename T>
-int GetCount() {
+int BSTNodeT<T>::GetCount() {
   return count_;
 }
 
