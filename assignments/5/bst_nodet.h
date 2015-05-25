@@ -7,10 +7,9 @@
 #ifndef BSTNODET_LOPES
 #define BSTNODET_LOPES
 
-#include <cstdlib>  // for NULL
+#include <cstdlib>  // FOR NULL
 
 template <typename T>
-
 class BSTNodeT {
  public:
   /* Default constructor. Sets left and right pointers to NULL, count to 0,
@@ -68,10 +67,10 @@ class BSTNodeT {
 
   /* Gets the value of count.
    */
-  unsigned int GetCount();
+  int GetCount();
  private:
   T contents_;
-  unsigned int count_;
+  int count_;
   BSTNodeT *left_child_, *right_child_;
 };
 
