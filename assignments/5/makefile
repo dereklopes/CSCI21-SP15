@@ -1,7 +1,7 @@
 # Makefile for Lab 26
 CXX = /usr/bin/g++
 MAIN = assignment_5_unit_test
-CPP_FILES = bst_nodet.tpp bs_treet.tpp 
+CPP_FILES =
 H_FILES = bst_nodet.h bs_treet.h
 CXXFLAGS = -Wall -Wextra -pedantic -g
 
