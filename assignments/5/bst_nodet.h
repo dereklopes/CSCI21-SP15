@@ -68,6 +68,7 @@ class BSTNodeT {
   /* Gets the value of count.
    */
   int GetCount();
+
  private:
   T contents_;
   int count_;
@@ -79,15 +80,15 @@ class BSTNodeT {
  */
 template <typename T>
 BSTNodeT<T>::BSTNodeT()
-  : contents_(T()), count_(0), left_child_(NULL), right_child_(NULL) { } 
+  : contents_(T()), count_(0), left_child_(NULL), right_child_(NULL) { }
 
 /* Overloaded constructor. Sets left and right pointers to NULL.
- * Sets the contents to the provided value. Sets count to 0.
+ * Sets the contents to the provided value. Sets count to 1.
  * @param T - value to set contents of node to
  */
 template <typename T>
 BSTNodeT<T>::BSTNodeT(T value)
-  : contents_(value), count_(0), left_child_(NULL), right_child_(NULL) { } 
+  : contents_(value), count_(1), left_child_(NULL), right_child_(NULL) { }
 
 /* Destructor. Sets left and right pointers to NULL.
  */

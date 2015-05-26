@@ -119,6 +119,13 @@ class BSTreeT {
    * @return BSTNodeT* - a pointer to the node searched for, NULL if not found 
    */
   BSTNodeT<T>* Get(T value, BSTNodeT<T>* root);
+
+  /* Returns a pointer to the node containing the smallest value at the given
+   * root.
+   * @param BSTNodeT* - a pointer to the root of the tree to search
+   * @return BSTNodeT* - a pointer to the smallest value in given tree
+   */
+  T FindMin(BSTNodeT<T>* root);
 };
 
 // PUBLIC MEMEBER FUNCTIONS
@@ -149,6 +156,7 @@ unsigned int BSTreeT<T>::GetSize() const {
 template <typename T>
 void BSTreeT<T>::Clear() {
   Clear(root_);
+  root_ = NULL;
 }
 
 /* Inserts a value into the tree. Calls the private insert function.
@@ -196,16 +204,14 @@ BSTNodeT<T>* BSTreeT<T>::Get(T value) {
 template <typename T>
 string BSTreeT<T>::ToStringForwards() {
   // Finds the last value in the tree so that no extra comma is added
+  if (root_ == NULL)
+    return string("");
   T last_value;
-  if (root_ == NULL) {
-    return string(""); 
-  } else {
-    BSTNodeT<T> *root = root_;
-    while (root->GetRightChild() != NULL) {
-      root = root->GetRightChild();
-    }
-    last_value = root->GetContents();
+  BSTNodeT<T> *it = root_;
+  while (it->GetRight() != NULL) {
+    it = it->GetRight();
   }
+  last_value = it->GetContents();
   return ToStringForwards(root_, last_value);
 }
 
@@ -218,11 +224,11 @@ string BSTreeT<T>::ToStringBackwards() {
   // Finds the first value in the tree so that no extra comma is added
   T first_value;
   if (root_ == NULL) {
-    return string(""); 
+    return string("");
   } else {
     BSTNodeT<T> *root = root_;
-    while (root->GetLeftChild() != NULL) {
-      root = root->GetLeftChild();
+    while (root->GetLeft() != NULL) {
+      root = root->GetLeft();
     }
     first_value = root->GetContents();
   }
@@ -242,17 +248,17 @@ unsigned int BSTreeT<T>::Insert(T value, BSTNodeT<T>*& root) {
   if (root == NULL) {
     root = new BSTNodeT<T>(value);
     size_++;
-    return root.GetCount();
+    return root->GetCount();
   }
   if (root->GetContents() == value) {
-    root.IncrementCount();
-    return root.GetCount();
+    root->IncrementCount();
+    return root->GetCount();
   }
   if (root->GetContents() > value) {
-    return Insert(value, root->GetLeftChild());
+    return Insert(value, root->GetLeft());
   }
   if (root->GetContents() < value) {
-    return Insert(value, root->GetRightChild());
+    return Insert(value, root->GetRight());
   }
   return (-1);  // for error checking, should never reach this
 }
@@ -264,8 +270,8 @@ template <typename T>
 void BSTreeT<T>::Clear(BSTNodeT<T>*& root) {
   if (root == NULL)
     return;
-  Clear(root->GetLeftChild());
-  Clear(root->GetRightChild());
+  Clear(root->GetLeft());
+  Clear(root->GetRight());
   delete root;
   size_--;
 }
@@ -280,12 +286,14 @@ string BSTreeT<T>::ToStringForwards(BSTNodeT<T>* root, T last_value) {
     return string("");
   stringstream ss;
   if (root->GetContents() == last_value) {
+    if (root->GetLeft() != NULL)
+      ss << root->GetLeft()->GetContents() << ", ";
     ss << root->GetContents();
   } else {
-    ss << InOrder(root->GetLeftChild());
-    ss << root->GetContents() << " ";
-    ss << InOrder(root->GetRightChild());
-  } 
+    ss << ToStringForwards(root->GetLeft(), last_value);
+    ss << root->GetContents() << ", ";
+    ss << ToStringForwards(root->GetRight(), last_value);
+  }
   return ss.str();
 }
 
@@ -301,10 +309,10 @@ string BSTreeT<T>::ToStringBackwards(BSTNodeT<T>* root, T first_value) {
   if (root->GetContents() == first_value) {
     ss << root->GetContents();
   } else {
-    ss << InOrder(root->GetRightChild());
-    ss << root->GetContents() << " ";
-    ss << InOrder(root->GetLeftChild());
-  } 
+    ss << ToStringBackwards(root->GetRight(), first_value);
+    ss << root->GetContents() << ", ";
+    ss << ToStringBackwards(root->GetLeft(), first_value);
+  }
   return ss.str();
 }
 
@@ -317,35 +325,35 @@ string BSTreeT<T>::ToStringBackwards(BSTNodeT<T>* root, T first_value) {
 template <typename T>
 int BSTreeT<T>::Remove(T value, BSTNodeT<T>*& root) {
   if (value == root->GetContents()) {
-    if (root->GetCount() > 0) {
+    if (root->GetCount() > 1) {
       root->DecrementCount();
       return root->GetCount();
     }
-    if (root->GetLeftChild() == NULL && root->GetRightChild() == NULL) {
+    if (root->GetLeft() == NULL && root->GetRight() == NULL) {
       delete root;
       root = NULL;
       size_--;
-      return true;
-    } else if (root->GetLeftChild() == NULL) {
+      return 0;
+    } else if (root->GetLeft() == NULL) {
       BSTNodeT<T>* temp = root;
-      root = root->GetRightChild();
+      root = root->GetRight();
       delete temp;
       size_--;
-      return true;
-    } else if (root->GetRightChild() == NULL) {
+      return 0;
+    } else if (root->GetRight() == NULL) {
       BSTNodeT<T>* temp = root;
-      root = root->GetLeftChild();
+      root = root->GetLeft();
       delete temp;
       size_--;
-      return true;
+      return 0;
     } else {
-      root->SetContents(FindMin(root->GetRightChild()));
-      return Remove(root->GetContents(), root->GetRightChild());
+      root->SetContents(FindMin(root->GetRight()));
+      return Remove(root->GetContents(), root->GetRight());
     }
-  } else if (value > root->GetContents() && root->GetRightChild() != NULL) {
-    return Remove(value, root->GetRightChild());
-  } else if (value < root->GetContents() && root->GetLeftChild() != NULL) {
-    return Remove(value, root->GetLeftChild());
+  } else if (value > root->GetContents() && root->GetRight() != NULL) {
+    return Remove(value, root->GetRight());
+  } else if (value < root->GetContents() && root->GetLeft() != NULL) {
+    return Remove(value, root->GetLeft());
   } else {
     return (-1);
   }
@@ -360,16 +368,43 @@ template <typename T>
 BSTNodeT<T>* BSTreeT<T>::Get(T value, BSTNodeT<T>* root) {
   if (value == root->GetContents())
     return root;
-  if (root->GetLeftChild() == NULL && root->GetRightChild() == NULL) {
+  if (root->GetLeft() == NULL && root->GetRight() == NULL) {
     return NULL;
-  } else if (value < root->GetContents() && root->GetLeftChild() != NULL) {
-    return Get(value, root->GetLeftChild());
-  } else if (value > root->GetContents() && root->GetRightChild() != NULL) {
-    return Get(value, root->GetRightChild());
+  } else if (value < root->GetContents() && root->GetLeft() != NULL) {
+    return Get(value, root->GetLeft());
+  } else if (value > root->GetContents() && root->GetRight() != NULL) {
+    return Get(value, root->GetRight());
   } else {
     return NULL;
   }
 }
 
+/* Searches the tree for the given value.
+ * @param T - the value to search for
+ * @return bool - true if the value was found
+ */
+template <typename T>
+bool BSTreeT<T>::Exists(T value, BSTNodeT<T>* root) {
+  if (value == root->GetContents())
+    return true;
+  if (value < root->GetContents() && root->GetLeft() != NULL)
+    return Exists(value, root->GetLeft());
+  if (value > root->GetContents() && root->GetRight() != NULL)
+    return Exists(value, root->GetRight());
+  return false;
+}
+
+/* Returns a pointer to the node containing the smallest value at the given
+ * root.
+ * @param BSTNodeT* - a pointer to the root of the tree to search
+ * @return BSTNodeT* - a pointer to the smallest value in given tree
+ */
+template <typename T>
+T BSTreeT<T>::FindMin(BSTNodeT<T>* root) {
+  if (root->GetLeft() == NULL)
+    return root->GetContents();
+  else
+    return FindMin(root->GetLeft());
+}
 
 #endif  // BSTREET_LOPES
